@@ -9,5 +9,6 @@ namespace TESTCRUDNET6.Services
         CategoryModel Add(CategoryVM category);
         void Update(CategoryModel category);
         void Delete(int id);
+        PagiproResponse getCategories(string? search, int page = 1);
     }
 }

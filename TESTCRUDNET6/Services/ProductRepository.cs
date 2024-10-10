@@ -210,7 +210,7 @@ namespace TESTCRUDNET6.Services
             var allProducts = _context.Products.Include(hh => hh.Category).AsQueryable();
             if (!string.IsNullOrEmpty(search))
             {
-                allProducts = allProducts.Where(hh => hh.ProductName.Contains(search));
+                allProducts = allProducts.Where(hh => hh.ProductName.ToLower().Trim().Contains(search.ToLower().Trim()));
             }
 
             if (categoryId.HasValue)
@@ -246,10 +246,7 @@ namespace TESTCRUDNET6.Services
                 Data = list
             };
 
-            return response;
-            
-        }
-
-        
+            return response;   
+        }    
     }
 }

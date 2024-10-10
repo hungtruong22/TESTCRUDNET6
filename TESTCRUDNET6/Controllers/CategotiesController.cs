@@ -64,6 +64,7 @@ namespace TESTCRUDNET6.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize]
         public IActionResult UpdateCate(int id, CategoryModel model)
         {
             if (id != model.CategoryId)
@@ -83,6 +84,7 @@ namespace TESTCRUDNET6.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize]
         public IActionResult DeleteCate(int id)
         {
             try
@@ -93,6 +95,30 @@ namespace TESTCRUDNET6.Controllers
             catch
             {
                 return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+        [HttpGet("getCategory")]
+        public IActionResult GetCategory(string? search, int page = 1)
+        {
+            try
+            {
+                var result = _categoryRepository.getCategories(search, page);
+
+                return Ok(new ApiResponse
+                {
+                    Success = true,
+                    Message = "Success",
+                    Data = result
+                });
+            }
+            catch
+            {
+                return BadRequest(new ApiResponse
+                {
+                    Success = false,
+                    Message = "We can't load categories"
+                }); ;
             }
         }
     }
